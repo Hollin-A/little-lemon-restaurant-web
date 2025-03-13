@@ -5,18 +5,20 @@ import Highlights from './components/containers/Highlights'
 import NavigationBar from './components/containers/NavigationBar'
 import Testimonials from './components/containers/Testimonials'
 
+import { ThemeProvider } from './components/theme-provider'
+
 import './App.css'
 
 function App() {
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <NavigationBar/>
       <HeroSection/>
       <Highlights/>
       <Testimonials/>
       <AboutSection/>
       <Footer/>
-    </>
+    </ThemeProvider>
   )
 }
 

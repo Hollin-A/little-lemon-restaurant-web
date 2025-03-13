@@ -1,5 +1,3 @@
-import React from "react";
-
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import {
   NavigationMenu,
@@ -7,6 +5,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@radix-ui/react-navigation-menu";
+
+import logo from "../../../assets/Logo.svg";
 
 const navlinks: { label: string; link: string }[] = [
   { label: "Home", link: "/home" },
@@ -20,8 +20,9 @@ type Props = {};
 
 const NavigationBar = (props: Props) => {
   return (
-    <NavigationMenu>
-      <NavigationMenuList className="flex">
+    <NavigationMenu className="flex justify-between items-center container mx-auto">
+      <img src={logo} alt="Little Lemon Logo" className="h-10" />
+      <NavigationMenuList className="flex justify-center py-4 items-center">
         {navlinks.map((navlink) => (
           <NavigationMenuItem key={navlink.link}>
             <a href={navlink.link}>
@@ -31,6 +32,14 @@ const NavigationBar = (props: Props) => {
             </a>
           </NavigationMenuItem>
         ))}
+        <NavigationMenuItem>
+          <NavigationMenuLink
+            className={navigationMenuTriggerStyle()}
+            onClick={() => {}}
+          >
+            Login
+          </NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
