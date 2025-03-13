@@ -56,7 +56,7 @@ type Props = {};
 
 const Testimonials = (props: Props) => {
   return (
-    <section className="w-full bg-secondary mt-10 py-20">
+    <section className="w-full bg-secondary mt-10 py-10">
       <div className="container mx-auto items-center flex flex-col gap-10">
         <SectionTitle title="Testimonials" />
         <Carousel
@@ -69,7 +69,7 @@ const Testimonials = (props: Props) => {
             {testimonials.map((testimonial) => (
               <CarouselItem
                 key={testimonial.name}
-                className="md:basis-1/2 lg:basis-1/3"
+                className="md:basis-1/2 lg:basis-1/4"
               >
                 <Card className="gap-4 h-full">
                   <CardHeader className="flex gap-4 items-center">
