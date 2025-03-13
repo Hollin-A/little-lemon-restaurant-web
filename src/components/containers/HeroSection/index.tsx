@@ -23,7 +23,7 @@ const HeroSection = (props: Props) => {
         </div>
         <Button className="max-w-max">Reserve a table</Button>
       </div>
-      <div className="h-[90%] aspect-square border rounded-xl">
+      <div className="h-full aspect-square border rounded-xl">
         <img
           src={heroImage}
           alt="Hero Image - Restaurant Interior Image"
