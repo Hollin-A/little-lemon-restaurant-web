@@ -5,7 +5,7 @@ type Props = {};
 
 const HeroSection = (props: Props) => {
   return (
-    <section className="w-full h-[60vh] flex justify-between items-center container mx-auto gap-40">
+    <section className="w-full h-[60vh] flex justify-between items-center container mx-auto gap-40 mt-4">
       <div className="flex flex-col gap-4 justify-between h-full max-h-[70%]">
         <div className="flex flex-col gap-2">
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-[#f4ce14]">
