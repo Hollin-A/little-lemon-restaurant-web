@@ -20,7 +20,7 @@ const HeroSection = () => {
               of Mediterranean magic. Join us today!
             </p>
           </div>
-          <Button className="max-w-max">Reserve a table</Button>
+          <Button className="max-w-max" variant="outline">Reserve a table</Button>
         </div>
         <div className="h-[90%] aspect-square border rounded-xl">
           <img
