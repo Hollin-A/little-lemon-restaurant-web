@@ -16,7 +16,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import PageTitle from "@/components/commons/PageTitle";
 import {
   Popover,
@@ -31,55 +37,83 @@ import { cn } from "@/lib/utils";
 const formSchema = z.object({
   name: z
     .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(50),
+    .min(2, { message: "Name must be at least 2 characters." })
+    .max(50, { message: "Name must not exceed 50 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  guests: z
+    .number({ invalid_type_error: "Please enter a number." })
+    .int({ message: "Number of guests must be a whole number." })
+    .min(1, { message: "At least 1 guest is required." })
+    .max(20, { message: "Maximum 20 guests allowed." }),
   date: z.date({
     required_error: "Reservation date is required.",
   }),
+  timeSlot: z
+    .string({ required_error: "Please select an available time slot." })
+    .min(1, { message: "Please select an available time slot." }),
 });
 
 const ReservationsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
+  const [isLoadingTimeSlots, setIsLoadingTimeSlots] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      email: "",
+      guests: 2,
+      timeSlot: "",
     },
   });
+
+  const selectedDate = form.watch("date");
+
+  useEffect(() => {
+    const fetchTimeSlots = async () => {
+      if (!selectedDate) return;
+
+      try {
+        setIsLoadingTimeSlots(true);
+        const response = await fetchAPI(selectedDate);
+        setAvailableTimeSlots(response || []);
+
+        if (form.getValues("timeSlot")) {
+          form.setValue("timeSlot", "");
+        }
+      } catch (error) {
+        console.error("Error fetching available time slots:", error);
+        setAvailableTimeSlots([]);
+      } finally {
+        setIsLoadingTimeSlots(false);
+      }
+    };
+
+    fetchTimeSlots();
+  }, [selectedDate, form]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-      console.log(values);
-      // You could add API call here
+      // Process the form values
+      console.log("Form values:", values);
+
+      // Example API call (replace with actual implementation)
+      // await submitReservation(values);
+
+      // Reset form after successful submission
+      // form.reset();
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting reservation:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchAPI(new Date("10-10-2025"));
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div className="my-10 container mx-auto">
-      <PageTitle title="Reservations" className="mb-10" />
+      <PageTitle title="Make a Reservation" className="mb-10" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -98,6 +132,54 @@ const ReservationsPage = () => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="your.email@example.com"
+                    {...field}
+                    className="w-1/2"
+                  />
+                </FormControl>
+                <FormDescription>
+                  We'll send your reservation confirmation to this email
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="guests"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number of Guests</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={20}
+                    placeholder="2"
+                    {...field}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    className="w-1/4"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please indicate how many people will be dining
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="date"
@@ -138,14 +220,65 @@ const ReservationsPage = () => {
                   </PopoverContent>
                 </Popover>
                 <FormDescription>
-                  Select the date you intend to make the reservation
+                  Select the date for your reservation
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Submitting..." : "Submit"}
+
+          <FormField
+            control={form.control}
+            name="timeSlot"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Time Slot</FormLabel>
+                <Select
+                  disabled={
+                    isLoadingTimeSlots ||
+                    !selectedDate ||
+                    availableTimeSlots.length === 0
+                  }
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-[240px]">
+                      <SelectValue
+                        placeholder={
+                          isLoadingTimeSlots
+                            ? "Loading..."
+                            : !selectedDate
+                            ? "Select a date first"
+                            : availableTimeSlots.length === 0
+                            ? "No available times"
+                            : "Select a time"
+                        }
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {availableTimeSlots.map((timeSlot) => (
+                      <SelectItem key={timeSlot} value={timeSlot}>
+                        {timeSlot}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Available time slots for the selected date
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={isLoading || isLoadingTimeSlots}
+            className="mt-6"
+          >
+            {isLoading ? "Submitting..." : "Confirm Reservation"}
           </Button>
         </form>
       </Form>
