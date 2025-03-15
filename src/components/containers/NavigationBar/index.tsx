@@ -16,9 +16,7 @@ const navlinks: { label: string; link: string }[] = [
   { label: "Order Online", link: "/order-online" },
 ];
 
-type Props = {};
-
-const NavigationBar = (props: Props) => {
+const NavigationBar = () => {
   return (
     <NavigationMenu className="flex justify-between items-center container mx-auto">
       <img src={logo} alt="Little Lemon Logo" className="h-10" />

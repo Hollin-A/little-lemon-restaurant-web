@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import heroImage from "../../../assets/restaurant-interior.jpg";
 
-type Props = {};
-
-const HeroSection = (props: Props) => {
+const HeroSection = () => {
   return (
     <section className="w-full h-[60vh] mt-4 relative">
       <div className="w-full h-full flex justify-between items-center container mx-auto gap-40">

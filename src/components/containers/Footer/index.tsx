@@ -31,9 +31,7 @@ const footerSections = [
   },
 ];
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <footer className="w-full bg-secondary mt-10 py-10">
       <div className="container mx-auto">

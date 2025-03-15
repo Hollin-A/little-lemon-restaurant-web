@@ -1,9 +1,7 @@
 import founder1 from "../../../assets/founders1.jpg";
 import founder2 from "../../../assets/founders2.jpg";
 
-type Props = {};
-
-const AboutSection = (props: Props) => {
+const AboutSection = () => {
   return (
     <section className="mt-10 container mx-auto flex items-center justify-between gap-10">
       <div className="w-[50%] flex flex-col gap-10">

@@ -52,9 +52,7 @@ const testimonials: {
   },
 ];
 
-type Props = {};
-
-const Testimonials = (props: Props) => {
+const Testimonials = () => {
   return (
     <section className="w-full bg-secondary mt-10 py-10">
       <div className="container mx-auto items-center flex flex-col gap-10">

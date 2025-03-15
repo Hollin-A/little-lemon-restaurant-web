@@ -1,6 +1,5 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -39,9 +38,7 @@ const specialsList: {
   },
 ];
 
-type Props = {};
-
-const Highlights = (props: Props) => {
+const Highlights = () => {
   return (
     <div className="container mx-auto flex flex-col gap-6 mt-10">
       <div className="flex justify-between items-center">
