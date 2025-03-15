@@ -25,11 +25,14 @@ const NavigationBar = () => {
       <NavigationMenuList className="flex justify-center py-4 items-center">
         {navlinks.map((navlink) => (
           <NavigationMenuItem key={navlink.link}>
-            <a href={navlink.link}>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                {navlink.label}
-              </NavigationMenuLink>
-            </a>
+            {/* <a href={navlink.link}> */}
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href={navlink.link}
+            >
+              {navlink.label}
+            </NavigationMenuLink>
+            {/* </a> */}
           </NavigationMenuItem>
         ))}
         <NavigationMenuItem>

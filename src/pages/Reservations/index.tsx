@@ -1,9 +1,17 @@
-type Props = {}
+import { useEffect } from "react";
+
+import { fetchAPI } from "@/api/api";
+
+type Props = {};
 
 const ReservationsPage = (props: Props) => {
-  return (
-    <div>Reservations Page</div>
-  )
-}
+  useEffect(() => {
+    const response = fetchAPI(new Date("10-10-2025"));
 
-export default ReservationsPage
+    console.log(response);
+  }, []);
+
+  return <div>Reservations Page</div>;
+};
+
+export default ReservationsPage;
