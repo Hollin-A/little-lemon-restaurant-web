@@ -8,10 +8,10 @@ const AboutSection = (props: Props) => {
     <section className="mt-10 container mx-auto flex items-center justify-between gap-10">
       <div className="w-[50%] flex flex-col gap-10">
         <div>
-          <h2 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-4xl text-[#f4ce14]">
+          <h2 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-4xl text-yellow">
             Little Lemon Restaurant
           </h2>
-          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-[#495e57]">
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-green">
             Chicago
           </h4>
         </div>
