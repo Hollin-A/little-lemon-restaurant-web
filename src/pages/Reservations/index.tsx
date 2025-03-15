@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, CheckCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,8 +30,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
-import { fetchAPI } from "@/api/api";
+import { fetchAPI, submitAPI } from "@/api/api";
 import { cn } from "@/lib/utils";
 
 import dining from "../../assets/dining.jpg";
@@ -55,10 +63,14 @@ const formSchema = z.object({
     .min(1, { message: "Please select an available time slot." }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 const ReservationsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
   const [isLoadingTimeSlots, setIsLoadingTimeSlots] = useState(false);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -95,17 +107,17 @@ const ReservationsPage = () => {
     fetchTimeSlots();
   }, [selectedDate, form]);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: FormValues) => {
     try {
       setIsLoading(true);
-      // Process the form values
-      console.log("Form values:", values);
 
-      // Example API call (replace with actual implementation)
-      // await submitReservation(values);
+      const success = await submitAPI(values);
 
-      // Reset form after successful submission
-      // form.reset();
+      if (success) {
+        setSubmittedData(values);
+        setConfirmationOpen(true);
+        form.reset();
+      }
     } catch (error) {
       console.error("Error submitting reservation:", error);
     } finally {
@@ -126,11 +138,7 @@ const ReservationsPage = () => {
                 <FormItem>
                   <FormLabel>Your Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="John Doe"
-                      {...field}
-                      className=""
-                    />
+                    <Input placeholder="John Doe" {...field} className="" />
                   </FormControl>
                   <FormDescription>
                     The reservation will be placed under this name
@@ -297,6 +305,63 @@ const ReservationsPage = () => {
           />
         </div>
       </div>
+      <Dialog open={confirmationOpen} onOpenChange={setConfirmationOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle className="h-6 w-6 text-green-500" />
+              Reservation Confirmed
+            </DialogTitle>
+            <DialogDescription>
+              Your reservation has been successfully placed.
+            </DialogDescription>
+          </DialogHeader>
+
+          {submittedData && (
+            <div className="py-4 space-y-3">
+              <div className="grid grid-cols-3 gap-1">
+                <p className="text-muted-foreground">Name:</p>
+                <p className="col-span-2 font-medium">{submittedData.name}</p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1">
+                <p className="text-muted-foreground">Email:</p>
+                <p className="col-span-2">{submittedData.email}</p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1">
+                <p className="text-muted-foreground">Guests:</p>
+                <p className="col-span-2">
+                  {submittedData.guests}{" "}
+                  {submittedData.guests === 1 ? "person" : "people"}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1">
+                <p className="text-muted-foreground">Date:</p>
+                <p className="col-span-2">
+                  {format(submittedData.date, "PPPP")}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1">
+                <p className="text-muted-foreground">Time:</p>
+                <p className="col-span-2">{submittedData.timeSlot}</p>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <p className="text-sm text-muted-foreground">
+                  A confirmation email has been sent to your email address.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button onClick={() => setConfirmationOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
