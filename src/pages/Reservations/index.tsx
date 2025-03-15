@@ -34,6 +34,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { fetchAPI } from "@/api/api";
 import { cn } from "@/lib/utils";
 
+import dining from "../../assets/dining.jpg";
+
 const formSchema = z.object({
   name: z
     .string()
@@ -114,174 +116,187 @@ const ReservationsPage = () => {
   return (
     <div className="my-10 container mx-auto">
       <PageTitle title="Make a Reservation" className="mb-10" />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Your Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John Doe" {...field} className="w-1/2" />
-                </FormControl>
-                <FormDescription>
-                  The reservation will be placed under this name
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email Address</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="your.email@example.com"
-                    {...field}
-                    className="w-1/2"
-                  />
-                </FormControl>
-                <FormDescription>
-                  We'll send your reservation confirmation to this email
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="guests"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Guests</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={20}
-                    placeholder="2"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    className="w-1/4"
-                  />
-                </FormControl>
-                <FormDescription>
-                  Please indicate how many people will be dining
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        return date < today;
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  Select the date for your reservation
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="timeSlot"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Time Slot</FormLabel>
-                <Select
-                  disabled={
-                    isLoadingTimeSlots ||
-                    !selectedDate ||
-                    availableTimeSlots.length === 0
-                  }
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
+      <div className="grid grid-cols-2 gap-10">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Your Name</FormLabel>
                   <FormControl>
-                    <SelectTrigger className="w-[240px]">
-                      <SelectValue
-                        placeholder={
-                          isLoadingTimeSlots
-                            ? "Loading..."
-                            : !selectedDate
-                            ? "Select a date first"
-                            : availableTimeSlots.length === 0
-                            ? "No available times"
-                            : "Select a time"
-                        }
-                      />
-                    </SelectTrigger>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                      className=""
+                    />
                   </FormControl>
-                  <SelectContent>
-                    {availableTimeSlots.map((timeSlot) => (
-                      <SelectItem key={timeSlot} value={timeSlot}>
-                        {timeSlot}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  Available time slots for the selected date
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormDescription>
+                    The reservation will be placed under this name
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button
-            type="submit"
-            disabled={isLoading || isLoadingTimeSlots}
-            className="mt-6"
-          >
-            {isLoading ? "Submitting..." : "Confirm Reservation"}
-          </Button>
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="your.email@example.com"
+                      {...field}
+                      className=""
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    We'll send your reservation confirmation to this email
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="guests"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number of Guests</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={1}
+                      max={20}
+                      placeholder="2"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      className="w-1/2"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Please indicate how many people will be dining
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          return date < today;
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    Select the date for your reservation
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="timeSlot"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Time Slot</FormLabel>
+                  <Select
+                    disabled={
+                      isLoadingTimeSlots ||
+                      !selectedDate ||
+                      availableTimeSlots.length === 0
+                    }
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-[240px]">
+                        <SelectValue
+                          placeholder={
+                            isLoadingTimeSlots
+                              ? "Loading..."
+                              : !selectedDate
+                              ? "Select a date first"
+                              : availableTimeSlots.length === 0
+                              ? "No available times"
+                              : "Select a time"
+                          }
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {availableTimeSlots.map((timeSlot) => (
+                        <SelectItem key={timeSlot} value={timeSlot}>
+                          {timeSlot}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Available time slots for the selected date
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              disabled={isLoading || isLoadingTimeSlots}
+              className="mt-6"
+            >
+              {isLoading ? "Submitting..." : "Confirm Reservation"}
+            </Button>
+          </form>
+        </Form>
+        <div className="h-full w-full rounded-xl overflow-hidden">
+          <img
+            src={dining}
+            alt="people dining"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </div>
     </div>
   );
 };
