@@ -6,14 +6,16 @@ import {
   NavigationMenuList,
 } from "@radix-ui/react-navigation-menu";
 
+import { URLSlug } from "@/config/constants";
+
 import logo from "../../../assets/Logo.svg";
 
 const navlinks: { label: string; link: string }[] = [
-  { label: "Home", link: "/home" },
-  { label: "About", link: "/about" },
-  { label: "Menu", link: "/menu" },
-  { label: "Reservations", link: "/reservations" },
-  { label: "Order Online", link: "/order-online" },
+  { label: "Home", link: URLSlug.home },
+  { label: "About", link: URLSlug.about },
+  { label: "Menu", link: URLSlug.menu },
+  { label: "Reservations", link: URLSlug.reservations },
+  { label: "Order Online", link: URLSlug.orderOnline },
 ];
 
 const NavigationBar = () => {

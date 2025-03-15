@@ -1,15 +1,16 @@
 import FooterSubtitle from "@/components/commons/FooterSubtitle";
 import verticalLogo from "../../../assets/logo-vertical-green.png";
+import { URLSlug } from "@/config/constants";
 
 const footerSections = [
   {
     title: "Navigation",
     children: [
-      { label: "Home", link: "/home" },
-      { label: "About", link: "/about" },
-      { label: "Menu", link: "/menu" },
-      { label: "Reservations", link: "/reservations" },
-      { label: "Order Online", link: "/order-online" },
+      { label: "Home", link: URLSlug.home },
+      { label: "About", link: URLSlug.about },
+      { label: "Menu", link: URLSlug.menu },
+      { label: "Reservations", link: URLSlug.reservations },
+      { label: "Order Online", link: URLSlug.orderOnline },
       { label: "Login" },
     ],
   },
