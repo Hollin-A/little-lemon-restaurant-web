@@ -128,7 +128,7 @@ const ReservationsPage = () => {
   return (
     <div className="my-10 container mx-auto">
       <PageTitle title="Make a Reservation" className="mb-10" />
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -297,7 +297,7 @@ const ReservationsPage = () => {
             </Button>
           </form>
         </Form>
-        <div className="h-full w-full rounded-xl overflow-hidden">
+        <div className="h-full w-full rounded-xl overflow-hidden hidden sm:flex">
           <img
             src={dining}
             alt="people dining"

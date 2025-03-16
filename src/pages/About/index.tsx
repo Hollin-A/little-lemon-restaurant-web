@@ -6,7 +6,7 @@ const AboutPage = () => {
   return (
     <section className="container mx-auto my-10">
       <PageTitle title="About" className="mb-4" />
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
         <div className="">
           <img
             src={founder1}
