@@ -4,7 +4,7 @@ import heroImage from "../../../assets/restaurant-interior.jpg";
 const HeroSection = () => {
   return (
     <section className="w-full sm:h-[60vh] h-[40vh] mt-4 relative">
-      <div className="w-full h-full flex justify-between items-center container mx-auto gap-40">
+      <div className="w-full h-full flex justify-between items-center container mx-auto px-4 gap-40">
         <div className="flex flex-col gap-4 justify-between h-full sm:max-h-[70%] max-h-[80%]">
           <div className="flex flex-col sm:gap-2">
             <h1 className="scroll-m-20 sm:text-4xl text-3xl font-extrabold tracking-tight lg:text-5xl text-yellow">

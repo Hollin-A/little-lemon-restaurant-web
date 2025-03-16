@@ -3,7 +3,7 @@ import founder2 from "../../../assets/founders2.jpg";
 
 const AboutSection = () => {
   return (
-    <section className="mt-10 container mx-auto flex items-center justify-between gap-10">
+    <section className="mt-10 container mx-auto px-4 flex items-center justify-between gap-10">
       <div className="sm:w-[50%] w-full flex flex-col sm:gap-10 gap-6">
         <div>
           <h2 className="scroll-m-20 sm:text-3xl text-2xl font-extrabold tracking-tight lg:text-4xl text-yellow">

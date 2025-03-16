@@ -38,7 +38,7 @@ const footerSections = [
 const Footer = () => {
   return (
     <footer className="w-full bg-secondary mt-10 sm:py-10 py-6">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 ">
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-4">
           <div className="sm:justify-center sm:flex hidden">
             <img

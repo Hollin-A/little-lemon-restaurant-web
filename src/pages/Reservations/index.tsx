@@ -126,7 +126,7 @@ const ReservationsPage = () => {
   };
 
   return (
-    <div className="my-10 container mx-auto">
+    <div className="my-10 container mx-auto  px-4 ">
       <PageTitle title="Make a Reservation" className="mb-10" />
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
         <Form {...form}>
