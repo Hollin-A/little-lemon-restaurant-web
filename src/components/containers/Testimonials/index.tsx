@@ -15,11 +15,7 @@ import Emily from "../../../assets/emily.jpg";
 import David from "../../../assets/david.jpg";
 import Jessica from "../../../assets/jessica.jpg";
 
-const testimonials: {
-  name: string;
-  image: string;
-  comment: string;
-}[] = [
+const testimonials = [
   {
     name: "Sarah T.",
     image: Sarah,
@@ -54,45 +50,53 @@ const testimonials: {
 
 const Testimonials = () => {
   return (
-    <section className="w-full bg-secondary mt-10 py-10">
-      <div className="container mx-auto items-center flex flex-col gap-10">
+    <section className="w-full bg-secondary sm:mt-10 mt-6 sm:py-10 py-6">
+      <div className="container mx-auto px-4 items-center flex flex-col sm:gap-10 gap-6">
         <SectionTitle title="Testimonials" />
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {testimonials.map((testimonial) => (
-              <CarouselItem
-                key={testimonial.name}
-                className="md:basis-1/2 lg:basis-1/4"
-              >
-                <Card className="gap-4 h-full">
-                  <CardHeader className="flex gap-4 items-center">
-                    <Avatar className="size-12">
-                      <AvatarImage
-                        src={testimonial.image}
-                        alt="person"
-                        className="object-cover"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <CardTitle>{testimonial.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center">
-                    <p className="text-sm text-gray-400">
-                      {testimonial.comment}
-                    </p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div className="relative w-full max-w-full">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="px-2">
+              {testimonials.map((testimonial) => (
+                <CarouselItem
+                  key={testimonial.name}
+                  className="sm:basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 p-1"
+                >
+                  <Card className="h-full flex flex-col">
+                    <CardHeader className="flex flex-row gap-4 items-center">
+                      <Avatar className="h-12 w-12 flex-shrink-0">
+                        <AvatarImage
+                          src={testimonial.image}
+                          alt={`${testimonial.name}'s photo`}
+                          className="object-cover"
+                        />
+                        <AvatarFallback>
+                          {testimonial.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <CardTitle className="text-base sm:text-lg">
+                        {testimonial.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                      <p className="text-sm text-gray-400">
+                        {testimonial.comment}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-4 sm:mt-6">
+              <CarouselPrevious className="static mr-2 translate-y-0" />
+              <CarouselNext className="static ml-2 translate-y-0" />
+            </div>
+          </Carousel>
+        </div>
       </div>
     </section>
   );
