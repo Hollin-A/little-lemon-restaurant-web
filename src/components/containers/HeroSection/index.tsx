@@ -1,7 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import heroImage from "../../../assets/restaurant-interior.jpg";
+import { URLSlug } from "@/config/constants";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="w-full sm:h-[60vh] h-[40vh] mt-4 relative">
       <div className="w-full h-full flex justify-between items-center container mx-auto px-4 gap-40">
@@ -20,7 +25,11 @@ const HeroSection = () => {
               of Mediterranean magic. Join us today!
             </p>
           </div>
-          <Button className="max-w-max" variant="outline">
+          <Button
+            className="max-w-max cursor-pointer"
+            variant="outline"
+            onClick={() => navigate(URLSlug.reservations)}
+          >
             Reserve a table
           </Button>
         </div>

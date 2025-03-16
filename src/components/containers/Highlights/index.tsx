@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+
 import {
   Card,
   CardDescription,
@@ -6,12 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import SectionTitle from "@/components/commons/SectionTitle";
 
 import salad from "../../../assets/salad.jpg";
 import pasta from "../../../assets/pasta.jpg";
 import steak from "../../../assets/steak.jpg";
-import { ArrowRight } from "lucide-react";
-import SectionTitle from "@/components/commons/SectionTitle";
+import { URLSlug } from "@/config/constants";
 
 const specialsList = [
   {
@@ -35,16 +38,23 @@ const specialsList = [
 ];
 
 const Highlights = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="container mx-auto px-4 flex flex-col sm:gap-6 gap-4 sm:mt-10 mt-6">
       <div className="flex justify-between items-center gap-4">
         <SectionTitle title="Specials" />
-        <Button variant="outline">Online Menu</Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate(URLSlug.menu)}
+          className="cursor-pointer"
+        >
+          Online Menu
+        </Button>
       </div>
       <div className="grid sm:grid-cols-3 grid-cols-1 sm:gap-10 gap-6">
         {specialsList.map((item) => (
           <Card key={item.title} className="overflow-hidden py-0">
-            {/* Small screens: Horizontal layout */}
             <div className="sm:hidden flex flex-row h-full sm:max-h-none max-h-40">
               <div className="w-1/3 h-auto">
                 <img
@@ -61,14 +71,17 @@ const Highlights = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardFooter className="px-3 py-2 mt-auto">
-                  <Button className="max-w-max text-xs h-8" variant="secondary">
+                  <Button
+                    className="max-w-max text-xs h-8 cursor-pointer"
+                    variant="secondary"
+                    onClick={() => navigate(URLSlug.orderOnline)}
+                  >
                     Order <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 </CardFooter>
               </div>
             </div>
 
-            {/* Medium and larger screens: Vertical layout */}
             <div className="hidden sm:flex pt-0 pb-4 sm:flex-col sm:gap-4 sm:justify-between sm:h-full">
               <div className="h-60">
                 <img
@@ -82,7 +95,11 @@ const Highlights = () => {
                 <CardDescription>{item.description}</CardDescription>
               </CardHeader>
               <CardFooter className="px-4">
-                <Button className="max-w-max" variant="secondary">
+                <Button
+                  className="max-w-max cursor-pointer"
+                  variant="secondary"
+                  onClick={() => navigate(URLSlug.orderOnline)}
+                >
                   Order Online <ArrowRight className="ml-1" />
                 </Button>
               </CardFooter>
